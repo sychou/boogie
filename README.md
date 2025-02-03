@@ -34,7 +34,18 @@ Discord Developer Portal, your Discord Server, and deploying to Docker.
 - Edit categories and/or channels for where you want the bot to appear
 - Add the same bot permissions as above
 
-### Deploy the bot to Docker
+### Running the bot locally with uv
+
+- Clone this repository
+- If needed, install uv via 'brew install uv'
+
+```sh
+uv sync
+source .venv/bin/activate
+uv run bot.py
+```
+
+### Deploy the bot to Docker (Optional)
 
 - Clone this repository
 - Edit the Dockerfile with your `DISCORD_TOKEN` (Bot Token) and `OPENAI_API_KEY`
