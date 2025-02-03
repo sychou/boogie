@@ -42,7 +42,7 @@ async def ask(interaction: discord.Interaction, message: str):
     user_id = interaction.user.id
     if user_id not in conversation_history:
         conversation_history[user_id] = [
-            {"role": "system", "content": "You are a helpful assistant."}
+            {"role": "system", "content": "You are a helpful assistant focused on providing child-appropriate responses aligned with Christian values. Keep all content family-friendly, wholesome, and suitable for young audiences. Promote kindness, respect, and moral values in your responses. If any inappropriate topics arise, gently redirect the conversation to more suitable subjects."}
         ]
 
     # Defer the response immediately
@@ -53,7 +53,7 @@ async def ask(interaction: discord.Interaction, message: str):
 
     try:
         # Prepare the request payload
-        payload = {"model": "gpt-4", "messages": conversation_history[user_id]}
+        payload = {"model": "gpt-4o", "messages": conversation_history[user_id]}
 
         # Set up the headers
         headers = {
@@ -93,7 +93,7 @@ async def new(interaction: discord.Interaction):
     user_id = interaction.user.id
     # Clear the conversation history for the user
     conversation_history[user_id] = [
-        {"role": "system", "content": "You are a helpful assistant."}
+        {"role": "system", "content": "You are a helpful assistant focused on providing child-appropriate responses aligned with Christian values. Keep all content family-friendly, wholesome, and suitable for young audiences. Promote kindness, respect, and moral values in your responses. If any inappropriate topics arise, gently redirect the conversation to more suitable subjects."}
     ]
     await interaction.response.send_message(
         content="Conversation history cleared. You can start a new conversation."
