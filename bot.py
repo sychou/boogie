@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 
 import discord
 import requests
@@ -24,7 +25,25 @@ conversation_history = {}
 
 # OpenAI API endpoint
 OPENAI_API_ENDPOINT = "https://api.openai.com/v1/chat/completions"
+# Log file path
+LOG_FILE = "boogie.log"
 
+def log_conversation(user_id: int, message: str, response: str):
+    """Log the conversation to a file."""
+    timestamp = datetime.datetime.now().isoformat()
+    log_entry = {
+        "timestamp": timestamp,
+        "user_id": user_id,
+        "message": message,
+        "response": response
+    }
+    
+    try:
+        with open(LOG_FILE, "a", encoding='utf-8') as f:
+            json.dump(log_entry, f)
+            f.write("\n")
+    except Exception as e:
+        print(f"Failed to log conversation: {e}")
 
 @bot.event
 async def on_ready():
@@ -68,6 +87,9 @@ async def ask(interaction: discord.Interaction, message: str):
         # Parse the response
         response_data = response.json()
         assistant_reply = response_data["choices"][0]["message"]["content"]
+
+        # Log the conversation
+        log_conversation(user_id, message, assistant_reply)
 
         # Add the assistant's reply to the conversation history
         conversation_history[user_id].append(
